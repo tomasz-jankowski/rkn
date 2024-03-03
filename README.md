@@ -64,7 +64,7 @@ ceda2c3bad39   postgres:16.2        "docker-entrypoint.s…"   8 minutes ago   U
 
 Then, exec into container bash, run migrations and create a new user.
 ```sh
-docker exec -it rkn-web-1 bash
+❯ docker exec -it rkn-web-1 bash
 root@8e70acf9c6d2:/app# python manage.py makemigrations
 root@8e70acf9c6d2:/app# python manage.py migrate
 root@8e70acf9c6d2:/app# python manage.py createsuperuser
