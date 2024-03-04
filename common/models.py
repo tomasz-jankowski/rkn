@@ -20,6 +20,9 @@ class TimeStampedSluggifiedModel(TimeStampedModel):
     name = models.CharField(unique=True)
     slug = SlugField(blank=True, editable=False)
 
+    def __str__(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         self.slug = slugify(unidecode(self.name))
         super().save(*args, **kwargs)

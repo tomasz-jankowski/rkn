@@ -1,7 +1,8 @@
-from common.models import TimeStampedSluggifiedModel
 from django.db import models
 
+from common.models import TimeStampedSluggifiedModel
 from common.validators import PutDomainValidator
+from faculties.models import Faculty
 from .enums import SocietyTypes
 
 
@@ -19,6 +20,7 @@ class Society(TimeStampedSluggifiedModel):
     visible = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
     logo_path = models.CharField(null=True, blank=True)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'societies'

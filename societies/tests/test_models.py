@@ -1,41 +1,40 @@
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
+
+from faculties.models import Faculty
 from societies.models import Society
 
 
 class SocietyTestCase(TestCase):
     def setUp(self):
+        self.faculty = Faculty.objects.create(name="name")
         Society.objects.create(
             name="name",
             email="student@student.put.poznan.pl",
             leader="leader",
-            supervisor_email="supervisor@put.poznan.pl"
+            supervisor_email="supervisor@put.poznan.pl",
+            faculty=self.faculty
         )
-
-    def test_society_has_valid_slug(self):
-        society = Society.objects.create(
-            name="Name of Society",
-            leader="test"
-        )
-        self.assertEqual(society.slug, "name-of-society")
 
     def test_society_is_created(self):
         society = Society.objects.get(name="name")
         self.assertIsInstance(society, Society)
 
-    def test_society_has_non_unique_name(self):
+    def test_society_has_no_faculty(self):
         with self.assertRaises(IntegrityError):
             Society.objects.create(
-                name="name",
-                leader="test"
+                name="test",
+                leader="test",
+                email="email@example.com",
             )
 
     def test_society_has_invalid_email(self):
         society = Society.objects.create(
             name="test",
             leader="test",
-            email="email@example.com"
+            email="email@example.com",
+            faculty=self.faculty
         )
         self.assertRaises(ValidationError, society.full_clean)
 
@@ -43,7 +42,8 @@ class SocietyTestCase(TestCase):
         society = Society.objects.create(
             name="test",
             leader="test",
-            supervisor_email="email@example.com"
+            supervisor_email="email@example.com",
+            faculty=self.faculty
         )
         self.assertRaises(ValidationError, society.full_clean)
 
@@ -51,8 +51,7 @@ class SocietyTestCase(TestCase):
         society = Society.objects.create(
             name="test",
             leader="test",
-            type="INVALID"
+            type="INVALID",
+            faculty=self.faculty
         )
         self.assertRaises(ValidationError, society.full_clean)
-
-
