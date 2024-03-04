@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'common',
     'societies',
     'faculties',
+    'accounts',
+    'budgets',
 ]
 
 MIDDLEWARE = [

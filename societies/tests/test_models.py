@@ -12,7 +12,6 @@ class SocietyTestCase(TestCase):
         Society.objects.create(
             name="name",
             email="student@student.put.poznan.pl",
-            leader="leader",
             supervisor_email="supervisor@put.poznan.pl",
             faculty=self.faculty
         )
@@ -25,14 +24,12 @@ class SocietyTestCase(TestCase):
         with self.assertRaises(IntegrityError):
             Society.objects.create(
                 name="test",
-                leader="test",
                 email="email@example.com",
             )
 
     def test_society_has_invalid_email(self):
         society = Society.objects.create(
             name="test",
-            leader="test",
             email="email@example.com",
             faculty=self.faculty
         )
@@ -41,7 +38,6 @@ class SocietyTestCase(TestCase):
     def test_society_has_invalid_supervisor_email(self):
         society = Society.objects.create(
             name="test",
-            leader="test",
             supervisor_email="email@example.com",
             faculty=self.faculty
         )
@@ -50,7 +46,6 @@ class SocietyTestCase(TestCase):
     def test_society_has_invalid_type(self):
         society = Society.objects.create(
             name="test",
-            leader="test",
             type="INVALID",
             faculty=self.faculty
         )

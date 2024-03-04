@@ -10,7 +10,7 @@ class Society(TimeStampedSluggifiedModel):
     abbreviation = models.CharField(max_length=10, null=True, blank=True)
     email = models.CharField(null=True, blank=True, validators=[PutDomainValidator()])
     leader = models.CharField(null=True, blank=True)
-    supervisor = models.CharField()
+    supervisor = models.CharField(null=True, blank=True)
     supervisor_email = models.CharField(null=True, blank=True, validators=[PutDomainValidator()])
     website = models.URLField(null=True, blank=True)
     facebook = models.URLField(null=True, blank=True)

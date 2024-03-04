@@ -29,3 +29,13 @@ class TimeStampedSluggifiedModel(TimeStampedModel):
 
     class Meta:
         abstract = True
+
+
+class FinanceModel(TimeStampedModel):
+    requested = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, editable=False)
+    granted = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, editable=False)
+    spent = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, editable=False)
+    left = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, editable=False)
+
+    class Meta:
+        abstract = True
