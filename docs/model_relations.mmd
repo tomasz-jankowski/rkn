@@ -1,0 +1,65 @@
+erDiagram
+    faculty[Faculty] {
+        int id PK
+        string name
+        string slug
+        datetime created_at
+        datetime updated_at
+        Society societies FK
+    }
+    society[Society] {
+        int id PK
+        string name
+        string slug
+        string abbreviation
+        string email
+        string leader
+        string supervisor
+        string supervisor_email
+        string website
+        string facebook
+        string instagram
+        string description
+        string type
+        boolean visible
+        boolean active
+        string logo_path
+        Faculty faculty FK
+        Budget budgets FK
+    }
+    account[Account] {
+        int id PK
+        string name
+        float requested
+        float granted
+        float spent
+        float left
+        float total
+        boolean active
+        string type
+        boolean unlimited
+        boolean amount_visible
+        datetime created_at
+        datetime updated_at
+        Budget budgets FK
+    }
+    budget[Budget] {
+        int id PK
+        string name
+        float requested
+        float granted
+        float spent
+        float left
+        float total
+        datetime created_at
+        datetime updated_at
+        Account account FK
+        Society society FK
+    }
+
+    %% Faculty has 0+ Society, Society has 1 Faculty
+    faculty }o--|| society : "has many"
+    %% Account has 0+ Budget, Budget has 1 Account
+    account }o--|| budget : "has many"
+    %% Society has 0+ Budget, Budget has 1 Society
+    society }o--|| budget : "has many"
