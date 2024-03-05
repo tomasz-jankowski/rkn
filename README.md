@@ -23,16 +23,29 @@ cd rkn
 
 2. Create .env file in root directory with below entries
 ```text
+# Django
 ENV=development                     # or production
 ALLOWED_HOSTS=example.com,test.com  # allowed hosts (comma-delimited, production only)
 PORT=8000                           # web app port
 SECRET_KEY=secret-key               # Django secret key
+
+# MinIO
+MINIO_API_PORT=9000                 # MinIO API port
+MINIO_CONSOLE_PORT=9001             # MinIO console port
+MINIO_USER=user                     # MinIO user
+MINIO_PASSWORD=password             # MinIO password
+MINIO_BUCKET=name                   # MinIO default bucket name
+
+# Postgres
 DB_NAME=postgres                    # database name
 DB_HOST=postgres                    # database host
-DB_PORT=8001                        # pgAdmin port
 DB_USER=user                        # database user
-DB_EMAIL=name@example.com           # database user e-mail
 DB_PASSWORD=password                # database password
+
+# pgAdmin
+PGADMIN_EMAIL=name@example.com      # pgAdmin user e-mail
+PGADMIN_PASSWORD=password           # pgAdmin password
+PGADMIN_PORT=8001                   # pgAdmin port
 ```
 
 3. Build image and run container
