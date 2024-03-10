@@ -15,13 +15,13 @@
 
 ### Installation
 
-1. Clone the repository
+#### 1. Clone the repository
 ```sh
 git clone https://github.com/tomasz-jankowski/rkn
 cd rkn
 ```
 
-2. Create .env file in root directory with below entries
+#### 2. Create .env file in root directory with below entries
 ```text
 # Django
 ENV=development                     # or production
@@ -48,7 +48,7 @@ PGADMIN_PASSWORD=password           # pgAdmin password
 PGADMIN_PORT=8001                   # pgAdmin port
 ```
 
-3. Create .minio_access_key and .minio_secret_key files in root directory containing MINIO_ACCESS_KEY and MINIO_SECRET_KEY accordingly.
+#### 3. Create .minio_access_key and .minio_secret_key files in root directory containing MINIO_ACCESS_KEY and MINIO_SECRET_KEY accordingly.
 
 .env
 ```text
@@ -67,23 +67,14 @@ access_key
 secret_key
 ```
 
-4. Build image and run container
+#### 4. Build image and run container
 ```sh
 docker compose build
 docker compose up -d
 ```
+#### 5. Configure application
 
-### Notes
-
-#### Persistent storage
-PostgreSQL and pgAdmin use persistent storage by defining Docker volumes in `docker-compose.yaml` files. If you want to e.g. change credentials you need to recreate the volumes.
-
-```sh
-docker compose down -v
-```
-
-#### Django admin credentials
-To create your first Django admin user, you need to exec into running container bash.
+##### Create and apply migrations
 
 First, get your container name.
 ```sh
@@ -99,11 +90,40 @@ Then, exec into container bash, run migrations and create a new user.
 ❯ docker exec -it rkn-web-1 bash
 root@8e70acf9c6d2:/app# python manage.py makemigrations
 root@8e70acf9c6d2:/app# python manage.py migrate
+````
+
+##### Create Django admin user
+
+```sh
 root@8e70acf9c6d2:/app# python manage.py createsuperuser
 Username (leave blank to use 'root'): admin
 Email address: admin@example.com
 Password: 
 Password (again): 
 Superuser created successfully.
+```
 
+##### Use static files from MinIO storage
+
+```sh
+root@539ea1091f76:/app# python manage.py collectstatic
+
+You have requested to collect static files at the destination
+location as specified in your settings.
+
+This will overwrite existing files!
+Are you sure you want to do this?
+
+Type 'yes' to continue, or 'no' to cancel: yes
+
+126 static files copied.
+```
+
+### Notes
+
+#### Persistent storage
+PostgreSQL and pgAdmin use persistent storage by defining Docker volumes in `docker-compose.yaml` files. If you want to e.g. change credentials you need to recreate the volumes.
+
+```sh
+docker compose down -v
 ```
