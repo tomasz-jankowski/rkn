@@ -1,8 +1,23 @@
+# Python
 *.pyc
 __pycache__
+
+# Django
 db.sqlite3
-.idea
+
+# Virtual Environment
 venv
+
+# Environment variables
 .env
+
+# Code coverage
 .coverage
 htmlcov
+
+# IDE specific files
+.idea
+
+# MinIO keys
+.minio_access_key
+.minio_secret_key

@@ -19,8 +19,24 @@ class Society(TimeStampedSluggifiedModel):
     type = models.CharField(choices=SocietyTypes.choices(), default=SocietyTypes.UNDEFINED)
     visible = models.BooleanField(default=True)
     active = models.BooleanField(default=True)
-    logo_path = models.CharField(null=True, blank=True)
+    logo = models.ImageField(null=True, blank=True)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
+
+    def remove_on_image_update(self):
+        try:
+            obj = Society.objects.get(id=self.id)
+        except Society.DoesNotExist:
+            return
+        if obj.logo and (not self.logo or obj.logo != self.logo):
+            obj.logo.delete(save=False)
+
+    def delete(self, *args, **kwargs):
+        self.logo.delete()
+        return super(Society, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.remove_on_image_update()
+        return super(Society, self).save(*args, **kwargs)
 
     class Meta:
         db_table = 'societies'

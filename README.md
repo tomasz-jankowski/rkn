@@ -32,8 +32,8 @@ SECRET_KEY=secret-key               # Django secret key
 # MinIO
 MINIO_API_PORT=9000                 # MinIO API port
 MINIO_CONSOLE_PORT=9001             # MinIO console port
-MINIO_USER=user                     # MinIO user
-MINIO_PASSWORD=password             # MinIO password
+MINIO_ACCESS_KEY=access_key         # MinIO user
+MINIO_SECRET_KEY=secret_key         # MinIO password
 MINIO_BUCKET=name                   # MinIO default bucket name
 
 # Postgres
@@ -48,7 +48,26 @@ PGADMIN_PASSWORD=password           # pgAdmin password
 PGADMIN_PORT=8001                   # pgAdmin port
 ```
 
-3. Build image and run container
+3. Create .minio_access_key and .minio_secret_key files in root directory containing MINIO_ACCESS_KEY and MINIO_SECRET_KEY accordingly.
+
+.env
+```text
+...
+MINIO_ACCESS_KEY=access_key
+MINIO_SECRET_KEY=secret_key
+...
+```
+
+.minio_access_key
+```text
+access_key
+```
+.minio_secret_key
+```text
+secret_key
+```
+
+4. Build image and run container
 ```sh
 docker compose build
 docker compose up -d
